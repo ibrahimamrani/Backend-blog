@@ -124,6 +124,6 @@ public class CommentService {
             log.error("Comment not found for id {} ", commentId);
             throw new BlogException("Le commentaire spécifié en parametre n'existe pas ");
         }
-        log.info("End update comment for comment id {} ", commentId);
+        log.info("End delete comment for comment id {} ", commentId);
     }
 }
