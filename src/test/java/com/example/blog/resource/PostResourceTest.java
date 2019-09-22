@@ -105,7 +105,7 @@ public class PostResourceTest {
 
 
         // then
-        mockMvc.perform(put("/posts/comments/1/?comment=newComment")
+        mockMvc.perform(put("/posts/comments/1/newComment")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

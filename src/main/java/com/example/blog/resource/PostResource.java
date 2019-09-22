@@ -48,9 +48,9 @@ public class PostResource {
     }
 
     @ApiOperation(value = "Modifier un commentaire ")
-    @PutMapping(value = "/comments/{id}")
+    @PutMapping(value = "/comments/{id}/{comment}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateComment(@PathVariable("id") Long commentId, @RequestParam("comment") String comment) throws BlogException {
+    public void updateComment(@PathVariable("id") Long commentId, @PathVariable("comment") String comment) throws BlogException {
         commentService.updateComment(commentId, comment);
     }
 
