@@ -44,7 +44,7 @@ public class CommentService {
 
         List<Comment> comments = commentRepository.findByPost(post.get());
         List<CommentDto> commentDtos = comments.stream().sorted(Comparator.comparing(Comment::getCreationDate).reversed())
-                .map(c -> CommentDto.builder().author(c.getAuthor()).comment(c.getComment()).id(c.getId())
+                .map(c -> CommentDto.builder().author(c.getAuthor()).content(c.getContent()).id(c.getId())
                         .creationDate(c.getCreationDate()).build()).collect(Collectors.toList());
 
         log.info("End get comments for post {} ", postId);
@@ -63,12 +63,12 @@ public class CommentService {
     public Long addComment(Long postId, CommentDto commentDto) throws BlogException {
         log.info("Start add comment for post {} ", postId);
 
-        Comment comment = Comment.builder().comment(commentDto.getComment()).author(commentDto.getAuthor()).build();
+        Comment comment = Comment.builder().content(commentDto.getContent()).author(commentDto.getAuthor()).build();
         comment.setCreationDate(new Date());
 
         Optional<Post> post = postRepository.findById(postId);
 
-        if (post != null && post.isPresent()) {
+        if (post.isPresent()) {
             comment.setPost(post.get());
         } else {
             log.error("Post not found for postId {} ", postId);
@@ -87,10 +87,10 @@ public class CommentService {
      * Update comment
      *
      * @param commentId id of comment
-     * @param comment   text content of comment
-     * @throws BlogException
+     * @param content   text content of comment
+     * @throws BlogException throw blog exception if comment not found
      */
-    public void updateComment(Long commentId, String comment) throws BlogException {
+    public void updateComment(Long commentId, String content) throws BlogException {
 
         log.info("Start update comment for comment id {} ", commentId);
 
@@ -98,7 +98,7 @@ public class CommentService {
 
         if (commentOptional.isPresent()) {
             Comment commentEntity = commentOptional.get();
-            commentEntity.setComment(comment);
+            commentEntity.setContent(content);
             commentRepository.save(commentEntity);
         } else {
             log.error("Comment not found for id {} ", commentId);
@@ -111,7 +111,8 @@ public class CommentService {
     /**
      * Delete existing comment by id
      *
-     * @param commentId
+     * @param commentId id of comment
+     * @throws BlogException throw blog exception if comment not found
      */
     public void deleteComment(Long commentId) throws BlogException {
         log.info("Start delete comment for comment id {} ", commentId);

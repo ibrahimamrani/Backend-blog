@@ -66,7 +66,7 @@ public class PostResourceTest {
     @Test
     public void shouldReturnCommentsForPost() throws Exception {
         //given
-        List<CommentDto> commentDtos = Arrays.asList(CommentDto.builder().id(1L).comment("Comment1").creationDate(new Date()).build());
+        List<CommentDto> commentDtos = Arrays.asList(CommentDto.builder().id(1L).content("Comment1").creationDate(new Date()).build());
 
         //when
         when(commentService.getCommentsForPost(anyLong())).thenReturn(commentDtos);
@@ -76,13 +76,13 @@ public class PostResourceTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))
-                .andExpect(jsonPath("$[0].comment", is("Comment1")));
+                .andExpect(jsonPath("$[0].content", is("Comment1")));
     }
 
     @Test
     public void shouldAddComment() throws Exception {
         //given
-        CommentDto commentDto = CommentDto.builder().comment("Comment1").author("author1").build();
+        CommentDto commentDto = CommentDto.builder().content("Comment1").author("author1").build();
 
         //when
         when(commentService.addComment(1L, commentDto)).thenReturn(1L);

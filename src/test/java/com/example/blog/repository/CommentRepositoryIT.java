@@ -2,7 +2,6 @@ package com.example.blog.repository;
 
 import com.example.blog.model.Comment;
 import com.example.blog.model.Post;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ public class CommentRepositoryIT {
     public void findByPostTest() {
         Optional<Post> post = postRepository.findById(POST_ID);
 
-        Comment comment = Comment.builder().author("author1").comment("comment1").creationDate(new Date()).post(post.get()).build();
+        Comment comment = Comment.builder().author("author1").content("comment1").creationDate(new Date()).post(post.get()).build();
         commentRepository.save(comment);
 
         List<Comment> comments = commentRepository.findByPost(post.get());

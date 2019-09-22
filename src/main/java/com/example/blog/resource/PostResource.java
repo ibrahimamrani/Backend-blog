@@ -15,6 +15,7 @@ import java.util.List;
 @Api("API pour la gestion des blogs.")
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin("*")
 public class PostResource {
 
     private final CommentService commentService;
@@ -48,10 +49,10 @@ public class PostResource {
     }
 
     @ApiOperation(value = "Modifier un commentaire ")
-    @PutMapping(value = "/comments/{id}/{comment}")
+    @PutMapping(value = "/comments/{id}/{content}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateComment(@PathVariable("id") Long commentId, @PathVariable("comment") String comment) throws BlogException {
-        commentService.updateComment(commentId, comment);
+    public void updateComment(@PathVariable("id") Long commentId, @PathVariable("content") String content) throws BlogException {
+        commentService.updateComment(commentId, content);
     }
 
     @ApiOperation(value = "Supprimer un commentaire ")

@@ -15,7 +15,7 @@ public class CommentDto {
 
     private Date creationDate;
 
-    private String comment;
+    private String content;
 
     private String author;
 }

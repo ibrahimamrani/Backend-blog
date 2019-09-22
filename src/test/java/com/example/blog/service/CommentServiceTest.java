@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommentServiceTest {
@@ -38,7 +38,7 @@ public class CommentServiceTest {
     public void shouldGetCommentsForPostSuccess() throws BlogException {
 
         //Given
-        given(commentRepository.findByPost(any(Post.class))).willReturn(Arrays.asList(Comment.builder().comment("comment1").build()));
+        given(commentRepository.findByPost(any(Post.class))).willReturn(Arrays.asList(Comment.builder().content("comment1").build()));
         given(postRepository.findById(anyLong())).willReturn(Optional.of(Post.builder().id(1L).title("title post1").build()));
 
         //when
@@ -47,7 +47,7 @@ public class CommentServiceTest {
         //then
         assertNotNull(commentDtos);
         assertFalse(commentDtos.isEmpty());
-        assertEquals(commentDtos.get(0).getComment(), "comment1");
+        assertEquals(commentDtos.get(0).getContent(), "comment1");
     }
 
     @Test(expected = BlogException.class)
@@ -65,11 +65,11 @@ public class CommentServiceTest {
     public void shouldAddCommentSuccess() throws BlogException {
 
         //Given
-        given(commentRepository.save(any(Comment.class))).willReturn(Comment.builder().id(1L).comment("comment1").build());
+        given(commentRepository.save(any(Comment.class))).willReturn(Comment.builder().id(1L).content("comment1").build());
         given(postRepository.findById(anyLong())).willReturn(Optional.of(Post.builder().id(1L).title("title post1").build()));
 
         //when
-        Long commentId = commentService.addComment(1L, CommentDto.builder().comment("comment").author("author").build());
+        Long commentId = commentService.addComment(1L, CommentDto.builder().content("comment").author("author").build());
 
         //then
         assertNotNull(commentId);
@@ -83,7 +83,7 @@ public class CommentServiceTest {
         given(postRepository.findById(anyLong())).willReturn(Optional.empty());
 
         //when
-        commentService.addComment(1L, CommentDto.builder().comment("comment").author("author").build());
+        commentService.addComment(1L, CommentDto.builder().content("comment").author("author").build());
 
     }
 
@@ -91,7 +91,7 @@ public class CommentServiceTest {
     public void shouldUpdateCommentSuccess() throws BlogException {
 
         //Given
-        given(commentRepository.findById(anyLong())).willReturn(Optional.of(Comment.builder().id(1L).comment("comment1").build()));
+        given(commentRepository.findById(anyLong())).willReturn(Optional.of(Comment.builder().id(1L).content("comment1").build()));
 
         //when
         commentService.updateComment(1L, "comment2");
@@ -113,7 +113,7 @@ public class CommentServiceTest {
     public void shouldDeleteCommentSuccess() throws BlogException {
 
         //Given
-        given(commentRepository.findById(anyLong())).willReturn(Optional.of(Comment.builder().id(1L).comment("comment1").build()));
+        given(commentRepository.findById(anyLong())).willReturn(Optional.of(Comment.builder().id(1L).content("comment1").build()));
 
         //when
         commentService.deleteComment(1L);
