@@ -40,6 +40,10 @@ Le fichier <b>data.sql</b> permet d'inséré des posts dans la base des données
 
 model — contient les entities;
 
+exception — les classes de gestion des exceptions 
+
+dto — les objets de transfert de données 
+
 repository — contient les classes qui communiquent avec la base de données;
 
 service — le logic métier;
