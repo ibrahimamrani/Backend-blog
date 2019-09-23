@@ -44,9 +44,9 @@ repository — contient les classes qui communiquent avec la base de donnée
 
 service — le logic métier;
 
-resource - contient les controllers.
+resource — contient les controllers.
 
-application.yml lllll;
+application.yml — contient des propriétés de paramètrage de l'application. Vous pouvez définir le port par défaut du serveur, le chemin de contexte du serveur, les URL de base de données, etc. dans ce fichier.;
  
 test/ - contient les tests unitaires et les tests d'intégration
 
